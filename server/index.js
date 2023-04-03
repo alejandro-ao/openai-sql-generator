@@ -1,8 +1,12 @@
 import express from "express";
 import cors from "cors";
 
-const app = express();  
-app.use(cors());
+const app = express();
+app.use(express.json()); 
+
+app.use(cors(
+  { origin: "*" }
+));
 
 const port = process.env.PORT || 3002;
 
@@ -16,10 +20,11 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}...`);
 });
 
-app.get("/generate", async (req, res) => {
-  const { prompt } = req.query;
+app.post("/generate", async (req, res) => {
+  console.log(req.body.queryDescription)
+  const { queryDescription } = req.body
   try {
-    const sqlQuery = await generate(prompt);
+    const sqlQuery = await generate(queryDescription);
     res.json({ sqlQuery });
   } catch (error) {
     console.error(error);

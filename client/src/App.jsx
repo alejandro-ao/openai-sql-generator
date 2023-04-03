@@ -3,12 +3,25 @@ import sqlServer from "./assets/sql-server.png";
 import { useState } from "react";
 
 export default function App() {
-
   const [userPrompt, setUserPrompt] = useState("");
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(userPrompt);
+    const query = await generateQuery();
+    console.log(query);
+  };
+
+  const generateQuery = async () => {
+    const response = await fetch("http://localhost:3002/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ queryDescription: userPrompt }),
+    });
+
+    const data = await response.json();
+    return data.sqlQuery.trim();
   };
 
   return (
