@@ -4,11 +4,12 @@ import { useState } from "react";
 
 export default function App() {
   const [userPrompt, setUserPrompt] = useState("");
+  const [sqlQuery, setSqlQuery] = useState("");
 
   const onSubmit = async (e) => {
     e.preventDefault();
     const query = await generateQuery();
-    console.log(query);
+    setSqlQuery(query);
   };
 
   const generateQuery = async () => {
@@ -38,6 +39,7 @@ export default function App() {
         />
         <input type="submit" value="Generate query" />
       </form>
+      <pre>{sqlQuery}</pre>
     </main>
   );
 }
