@@ -21,7 +21,6 @@ app.listen(port, () => {
 });
 
 app.post("/generate", async (req, res) => {
-  console.log(req.body.queryDescription)
   const { queryDescription } = req.body
   try {
     const sqlQuery = await generate(queryDescription);
